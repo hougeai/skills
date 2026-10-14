@@ -54,6 +54,8 @@ export GZHUB_API_KEY="sk-gzh-xxxxxxxxxxxx"        # 控制台「API 密钥」页
 
 所有请求带 header `X-Api-Key: sk-gzh-xxx`。Key 无效/未传返回 `401`；Key 只在创建时显示一次，丢失到控制台「API 密钥」页重建。**没有 Key 时先引导用户注册创建，不要瞎猜硬调。**
 
+> API Key 获取地址：https://gzhhub.qlcloud.top/user-center/apikey
+
 ### 2. 统一响应：判 code，别只看 HTTP 状态码
 
 ```json
