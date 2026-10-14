@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.DS_Store
+.venv
+.env
+
+# 外部收藏的 skill（内容不追踪，清单见 external/README.md）
+external/*
+!external/README.md
