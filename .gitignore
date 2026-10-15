@@ -7,3 +7,5 @@ node_modules/
 # 外部收藏的 skill（内容不追踪，清单见 external/README.md）
 external/*
 !external/README.md
+# 特定脚本
+sync-qianliu.sh
