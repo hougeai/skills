@@ -4,18 +4,17 @@
 
 ```
 skills/
-├── README.md                  # 目录索引：一句话说明 + 安装方式（人看的入口）
-├── .gitignore                 # **/.env —— 各 skill 的密钥不进仓库
 ├── creator/                   # 自媒体/内容创作（公众号/图文/短视频）
 │   ├── gzh-hub/               # 公众号创作工作台：检索/导入/排版推送草稿箱（.env: GZHUB_API_KEY）
 │   └── lieflat-less-ai-tone/  # 去 AI 味：结构/翻译腔/人机对比检测脚本
+├── external/                  # 外部收藏（git 不追踪）：按 external/README.md 清单按需 clone
+├── qianliu/                   # 千流云原子能力 skills ×7（见 qianliu/README.md）
 ├── research/                  # 研究类（论文/专利/技术报告）
 │   ├── deepxiv/               # arXiv/PMC 论文搜索与阅读
 │   ├── semantic-scholar/      # 学术搜索/引用关系，全学科 2 亿+论文（.env: SS_API_KEY）
 │   └── top-conference-digest/ # 顶会论文摘要：PapersWithCode 抓取 + LLM 分析
-└── qianliu/                   # 千流云原子能力 skills ×7（见 qianliu/README.md）
-
-external/                      # 外部收藏（git 不追踪）：按 external/README.md 清单按需 clone
+├── README.md                  # 目录索引：一句话说明 + 安装方式（人看的入口）
+└── .gitignore                 # **/.env —— 各 skill 的密钥不进仓库
 ```
 
 ## 安装
