@@ -5,7 +5,8 @@
 ```
 skills/
 ├── creator/                   # 自媒体/内容创作（公众号/图文/短视频）
-│   ├── gzh-hub/               # 公众号创作工作台：检索/导入/排版推送草稿箱（.env: GZHUB_API_KEY）
+│   ├── gzh-hub/               # 公众号创作工作台：检索/导入/排版推送草稿箱
+│   ├── image-prompter/        # 生图提示词库：21 套模板 + 541 实测案例
 │   └── lieflat-less-ai-tone/  # 去 AI 味：结构/翻译腔/人机对比检测脚本
 ├── external/                  # 外部收藏（git 不追踪）：按 external/README.md 清单按需 clone
 ├── qianliu/                   # 千流云原子能力 skills ×7（见 qianliu/README.md）
