@@ -13,12 +13,12 @@
 ## 安装
 
 ```bash
-# 一键装全部 7 个（路径指向 qianliu/ 子目录，不会带出仓库里其它 skill）
-npx skills add hougeai/skills/tree/main/qianliu
-
-# 免交互
-npx skills add hougeai/skills/tree/main/qianliu --all
-
 # 只装某一个
 npx skills add hougeai/skills --skill qianliu-asr
+
+# 加 -y 全程免交互
+npx skills add hougeai/skills --skill qianliu-asr -y
+
+# 一键装全部 7 个
+npx skills add hougeai/skills --skill qianliu-asr --skill qianliu-tts --skill qianliu-image --skill qianliu-parse --skill qianliu-rag --skill qianliu-search --skill qianliu-memory
 ```

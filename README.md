@@ -26,10 +26,10 @@ npx skills add hougeai/skills
 
 # 只装某一个（skill 名 = 目录名）
 npx skills add hougeai/skills --skill gzh-hub
-npx skills add hougeai/skills --skill semantic-scholar -g   # -g 全局（~/.claude/skills/），所有项目可用
+npx skills add hougeai/skills --skill gzh-hub -g   # -g 全局（~/.agents/skills/，各 agent 目录自动建符号链接）
 
-# 只装某个系列全套（示例：qianliu/README.md）
-npx skills add hougeai/skills/tree/main/qianliu
+# 只装某个系列全套（示例：千流云 7 个，多个 --skill 参数指定）
+npx skills add hougeai/skills --skill qianliu-asr --skill qianliu-tts --skill qianliu-image --skill qianliu-parse --skill qianliu-rag --skill qianliu-search --skill qianliu-memory
 ```
 
 ## 更新
