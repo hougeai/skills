@@ -42,6 +42,18 @@ cp -r /tmp/i-have-adhd/skills/i-have-adhd external/productivity/i-have-adhd
 rm -rf /tmp/i-have-adhd
 ```
 
+### dashi-ppt
+
+- **仓库**：https://github.com/chuspeeism/dashi-ppt-skill
+- **用途**：程序型 PPT skill——内置完整 Node.js 生成器（12 套主题 × 1020 版式 × 20 种页面角色），Agent 把需求整理成 JSON 计划调本地生成器，产出浏览器可编辑（改字/换图/滑杆调版式）的 HTML PPT，可导出可编辑 PPTX/PDF；AGPL-3.0（导出引擎 html-deck-to-pptx 为专有组件）
+- **备注**：仓库 160M（.git 占 101M），这里只取 `skills/dashi-ppt/`（59M，skill 本体自包含，含内置生成器 project/）；运行需 Node.js 20+，导出 PPTX/PDF 需本机 Chrome/Chromium；10 页实测约 10 万 token
+
+```bash
+git clone --depth 1 https://github.com/chuspeeism/dashi-ppt-skill.git /tmp/dashi-ppt-skill
+cp -r /tmp/dashi-ppt-skill/skills/dashi-ppt external/productivity/dashi-ppt
+rm -rf /tmp/dashi-ppt-skill
+```
+
 ## research
 
 ### figures4papers
