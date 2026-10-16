@@ -31,6 +31,30 @@ cp -r /tmp/video-talkcraft external/creator/video-talkcraft
 rm -rf /tmp/video-talkcraft
 ```
 
+### ainosleep-stickman-illustrations
+
+- **仓库**：https://github.com/ainosleep/ainosleep-stickman-illustrations
+- **用途**：聚焦型中文正文配图 skill——把文章里的判断/流程/状态/隐喻变成 16:9 白底黑线火柴人（AINoSleep IP）手绘解释图；先出 shot list 再逐张生图，自带风格 DNA、动作库、结构类型、prompt 模板与 QA checklist（含中文短标注 + 错字兜底规则）；两种用法：只输出shot list + prompt，或直接生成正文配图。
+- **备注**：与 image-prompter（通用 gpt-image-2 模板库）互补——本库是单一 IP 专用、对中文渲染做了显式处理；只取 skill 子目录（4.4M，含 assets 参考板与合格样图，供风格校准，必带），根目录 README/examples 为分享文档不入
+
+```bash
+git clone --depth 1 https://github.com/ainosleep/ainosleep-stickman-illustrations.git /tmp/stickman
+cp -r /tmp/stickman/ainosleep-stickman-illustrations external/creator/ainosleep-stickman-illustrations
+rm -rf /tmp/stickman
+```
+
+### human-writing
+
+- **仓库**：https://github.com/KKKKhazix/human-writing
+- **用途**：中文"活人感"写作 skill——治 AI 长文空泛：动笔前材料门禁（非虚构需 ≥5 件具体材料，凑不齐就缩短/短答，绝不灌字数）、按体裁分参考（公众号/知乎/小说/口播等）、成稿后 revision 清单 + `check_prose.py` 查翻案句/AI 排比/句长变异/连词密度
+- **备注**：MIT；与 `creator/lieflat-less-ai-tone`（去 AI 味，偏事后检测）互补——本库是完整起草工作流（材料→成稿→审稿），lieflat 可留作终检；只取 skill 子目录（140K，含 references 5 篇 + check_prose.py + 蒸馏版 dist），用前手动软链到 `~/.claude/skills/human-writing`
+
+```bash
+git clone --depth 1 https://github.com/KKKKhazix/human-writing.git /tmp/human-writing
+cp -r /tmp/human-writing/human-writing external/creator/human-writing
+rm -rf /tmp/human-writing
+```
+
 ## design
 
 ### logo-design
@@ -53,32 +77,6 @@ rm -rf logo-design-skill
 git clone --depth 1 https://github.com/VoltAgent/awesome-design-md.git external/design/awesome-design-md
 ```
 
-## productivity
-
-### i-have-adhd
-
-- **仓库**：https://github.com/ayghri/i-have-adhd
-- **用途**：ADHD 友好的输出风格技能——行动优先、编号分步、每轮重述进度、具体时间估计；用 `/i-have-adhd` 开启，"stop adhd mode" 关闭（MIT）
-- **备注**：仓库本体含评测脚本（888K），这里只取 `skills/i-have-adhd/`（SKILL.md + agents/）
-
-```bash
-git clone --depth 1 https://github.com/ayghri/i-have-adhd.git /tmp/i-have-adhd
-cp -r /tmp/i-have-adhd/skills/i-have-adhd external/productivity/i-have-adhd
-rm -rf /tmp/i-have-adhd
-```
-
-### dashi-ppt
-
-- **仓库**：https://github.com/chuspeeism/dashi-ppt-skill
-- **用途**：程序型 PPT skill——内置完整 Node.js 生成器（12 套主题 × 1020 版式 × 20 种页面角色），Agent 把需求整理成 JSON 计划调本地生成器，产出浏览器可编辑（改字/换图/滑杆调版式）的 HTML PPT，可导出可编辑 PPTX/PDF；AGPL-3.0（导出引擎 html-deck-to-pptx 为专有组件）
-- **备注**：仓库 160M（.git 占 101M），这里只取 `skills/dashi-ppt/`（59M，skill 本体自包含，含内置生成器 project/）；运行需 Node.js 20+，导出 PPTX/PDF 需本机 Chrome/Chromium；10 页实测约 10 万 token
-
-```bash
-git clone --depth 1 https://github.com/chuspeeism/dashi-ppt-skill.git /tmp/dashi-ppt-skill
-cp -r /tmp/dashi-ppt-skill/skills/dashi-ppt external/productivity/dashi-ppt
-rm -rf /tmp/dashi-ppt-skill
-```
-
 ## research
 
 ### figures4papers
@@ -97,4 +95,42 @@ git clone --depth 1 https://github.com/ChenLiu-1996/figures4papers.git external/
 
 ```bash
 git clone --depth 1 https://github.com/handsomestWei/patent-disclosure-skill.git external/research/patent-disclosure-skill
+```
+
+## tools
+
+### geolook
+
+- **仓库**：https://github.com/aigclink/geolook
+- **用途**：GEO（生成式引擎优化）全流程自托管平台——给产品网址/材料，做站点六维体检（访问→定向→理解→可引用四层依赖链）、AI 答案跨 17 引擎采样（10 API + 7 手动）、自动推导品牌事实/竞品/问题库、生成带验收标准的工单、产出可部署资产（llms.txt/JSON-LD/定义块/FAQ/大纲）、自动验收闭环并打包客户交付物；国内+海外双市场并行，证据锚定公开实证（602 prompts / 21,143 citations / 187,818 条去重 CN 引用，官网仅占引用 1.37%）
+- **备注**：MIT；既是自托管 Web 看板（Python CLI `geo.py ui` → 127.0.0.1:8765，仅 requests/bs4/lxml 三依赖、无数据库无账号、断网可用）也是 Claude Code skill；零 Key 也能跑（自动采样跳过，改人工采样表）；本仓库整仓拷贝（42M，含 `.git` 与 `work/` 运行产物示例）；已修正 SKILL.md 中 3 处作者硬编码路径 `/Users/brucejan/geo` 为相对 `<skill_dir>/`；商业用途无限制；要用时手动软链 `external/tools/geolook` 到 `~/.claude/skills/geo`
+
+```bash
+git clone --depth 1 https://github.com/aigclink/geolook.git /tmp/geolook
+cp -r /tmp/geolook external/tools/geolook
+rm -rf /tmp/geolook
+```
+
+### i-have-adhd
+
+- **仓库**：https://github.com/ayghri/i-have-adhd
+- **用途**：ADHD 友好的输出风格技能——行动优先、编号分步、每轮重述进度、具体时间估计；用 `/i-have-adhd` 开启，"stop adhd mode" 关闭（MIT）
+- **备注**：仓库本体含评测脚本（888K），这里只取 `skills/i-have-adhd/`（SKILL.md + agents/）；原归 productivity，现并入 tools
+
+```bash
+git clone --depth 1 https://github.com/ayghri/i-have-adhd.git /tmp/i-have-adhd
+cp -r /tmp/i-have-adhd/skills/i-have-adhd external/tools/i-have-adhd
+rm -rf /tmp/i-have-adhd
+```
+
+### dashi-ppt
+
+- **仓库**：https://github.com/chuspeeism/dashi-ppt-skill
+- **用途**：程序型 PPT skill——内置完整 Node.js 生成器（12 套主题 × 1020 版式 × 20 种页面角色），Agent 把需求整理成 JSON 计划调本地生成器，产出浏览器可编辑（改字/换图/滑杆调版式）的 HTML PPT，可导出可编辑 PPTX/PDF；AGPL-3.0（导出引擎 html-deck-to-pptx 为专有组件）
+- **备注**：仓库 160M（.git 占 101M），这里只取 `skills/dashi-ppt/`（59M，skill 本体自包含，含内置生成器 project/）；运行需 Node.js 20+，导出 PPTX/PDF 需本机 Chrome/Chromium；10 页实测约 10 万 token；原归 productivity，现并入 tools
+
+```bash
+git clone --depth 1 https://github.com/chuspeeism/dashi-ppt-skill.git /tmp/dashi-ppt-skill
+cp -r /tmp/dashi-ppt-skill/skills/dashi-ppt external/tools/dashi-ppt
+rm -rf /tmp/dashi-ppt-skill
 ```
