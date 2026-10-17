@@ -42,7 +42,7 @@ version: 1.0.0
 | 3.4 `/drafts/image` | POST | 上传图片到图床（multipart，得封面/插图 URL） |
 | 3.5 `/drafts/digest` | POST | AI 生成摘要（≤120 字，直传 content） |
 | 3.6 `/drafts/title` | POST | AI 生成标题（article_type 控制体裁口径） |
-| 3.7 `/publish/draft` | POST | **核心端点**：Markdown 推送公众号草稿箱，双体裁（3.7.1 图文 / 3.7.2 贴图自动分页） |
+| 3.7 `/publish/draft` | POST | **核心端点**：Markdown 推送公众号草稿箱，双体裁（3.7.1 图文 / 3.7.2 贴图自动分页）；`theme_id` 双体裁均必传 |
 
 ## 使用铁律（先读，四条）
 
@@ -53,8 +53,6 @@ export GZHUB_API_KEY="sk-gzh-xxxxxxxxxxxx"        # 控制台「API 密钥」页
 ```
 
 所有请求带 header `X-Api-Key: sk-gzh-xxx`。Key 无效/未传返回 `401`。**没有 Key 时先引导用户注册创建，不要瞎猜硬调。**
-
-> API Key 获取地址：https://gzhhub.qlcloud.top/user-center/apikey
 
 ### 2. 统一响应：判 code，别只看 HTTP 状态码
 
@@ -182,7 +180,7 @@ curl -H "X-Api-Key: $GZHUB_API_KEY" "https://api.qlcloud.top/gzhhub/v1/open/them
 curl -H "X-Api-Key: $GZHUB_API_KEY" "https://api.qlcloud.top/gzhhub/v1/open/themes/newspic/list"
 ```
 
-3.2 返回 `theme_id`（如 `default`）供 3.7.1 图文模式用；3.3 返回贴图主题（如 `theme-warm` 暖阳日记）供 3.7.2 贴图模式用。
+3.2 返回 `theme_id`（如 `emerald` 翠序，也是当前默认主题）供 3.7.1 图文模式用；3.3 返回贴图主题（如 `theme-warm` 暖阳日记）供 3.7.2 贴图模式用。
 
 ## 3.4 上传图片（图床）
 
@@ -228,13 +226,14 @@ curl -X POST "https://api.qlcloud.top/gzhhub/v1/open/publish/draft" \
     "author": "GzhHub",
     "cover_url": "https://...",
     "content": "# 欢迎使用 GzhHub\n\n正文内容...",
-    "theme_id": "default",
-    "theme_config": { "primary_color": "#2563EB", "font_size": "16px", "show_caption": true }
+    "theme_id": "emerald",
+    "theme_config": { "primary_color": "#059669", "font_size": "16px", "show_caption": true }
   }'
 ```
 
 - `mp_id`：用户已绑定的公众号（gh_xxx，先调 3.1 获取）
 - `cover_url`：图文模式必填（先走 3.4 上传）
+- `theme_id`：必传，图文主题 ID（先调 3.2 获取，如 `emerald`）；不传或传不存在的 ID 会直接报错，不会静默用默认主题
 - `theme_config` 可整体省略（用主题内置默认值），每个键都是覆盖项，可只传需要改的：`primary_color / font / font_size / heading_styles / show_caption / cite_status / use_indent / use_justify`
 - 响应 `data.media_id`
 
@@ -257,7 +256,8 @@ curl -X POST "https://api.qlcloud.top/gzhhub/v1/open/publish/draft" \
 ```
 
 - `content` 语法：`#` 一级标题作封面、`##` 作章节标题、`---` 整行作显式分页符
-- 主题统一由顶层 `theme_id` 指定（如 `theme-warm`）；`newspic_config` 只放定制项（kicker/date/quote/justify/platform），可整体省略
+- `theme_id`：必传，贴图主题 ID（先调 3.3 获取，如 `theme-warm`）；不传或传不存在的 ID 会直接报错，不会静默用默认主题
+- `newspic_config` 只放定制项（kicker/date/quote/justify/platform），可整体省略
 - 可选项：`kicker`（页眉徽标，默认"公众号贴图"）、`date`（页脚日期，默认今天）、`quote`（页脚签名）、`justify`（两端对齐）、`platform`（默认 1080×1440）
 - 最多 20 张 PNG（微信上限），超了报错让用户精简
 - 响应 `data.wechat_newspic_id` + `media_id` + `image_count`
