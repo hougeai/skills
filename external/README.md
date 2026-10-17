@@ -31,6 +31,29 @@ cp -r /tmp/video-talkcraft external/creator/video-talkcraft
 rm -rf /tmp/video-talkcraft
 ```
 
+### video-shotcraft
+
+- **仓库**：https://github.com/Vincentwei1021/video-shotcraft
+- **用途**：程序型产品宣传片 skill——真实页面截图 + 124 张镜头配方卡（150 shots）+ Remotion 代码绘制 + 2.5D 运镜 + BGM 卡点 + 声音设计 → 1920×1080 MP4，可开浏览器工作台二次编辑、导出剪映工程；与 anything2explainer（MG 讲解）、video-talkcraft（口播）同作者三部曲
+- **备注**：Apache-2.0（音频各有授权；Remotion 引擎个人/小团队免费，公司可能需付费）
+```bash
+git clone --depth 1 https://github.com/Vincentwei1021/video-shotcraft.git /tmp/video-shotcraft
+cp -r /tmp/video-shotcraft external/creator/video-shotcraft
+rm -rf /tmp/video-shotcraft
+```
+
+### ian-xiaohei-illustrations
+
+- **仓库**：https://github.com/helloianneo/ian-xiaohei-illustrations
+- **用途**：聚焦型中文正文配图 skill——把文章里的判断/流程/状态/隐喻画成 16:9 白底黑线"小黑"手绘解释图（黑色实心小角色参与核心动作，少量红橙蓝中文批注），先出 shot list 再逐张生图，自带风格 DNA、结构类型、prompt 模板与 QA checklist
+- **备注**：MIT；只取 `ian-xiaohei-illustrations/` 子目录（14M，含风格校准样图）；本 skill 不生图——产出结构化提示词，调宿主内置 image_gen 逐张生成后按 QA 清单校验；小黑为作者 IP，直接可用，要自有 IP 只换 `references/xiaohei-ip.md`、`style-dna.md` 和 `assets/examples/`；与 ainosleep-stickman-illustrations 同类不同 IP
+
+```bash
+git clone --depth 1 https://github.com/helloianneo/ian-xiaohei-illustrations.git /tmp/xiaohei
+cp -r /tmp/xiaohei/ian-xiaohei-illustrations external/creator/ian-xiaohei-illustrations
+rm -rf /tmp/xiaohei
+```
+
 ### ainosleep-stickman-illustrations
 
 - **仓库**：https://github.com/ainosleep/ainosleep-stickman-illustrations
@@ -41,6 +64,18 @@ rm -rf /tmp/video-talkcraft
 git clone --depth 1 https://github.com/ainosleep/ainosleep-stickman-illustrations.git /tmp/stickman
 cp -r /tmp/stickman/ainosleep-stickman-illustrations external/creator/ainosleep-stickman-illustrations
 rm -rf /tmp/stickman
+```
+
+### guizang-material-illustration
+
+- **仓库**：https://github.com/op7418/guizang-material-illustration
+- **用途**：中文解释图/图表美化 skill——歸藏材质 3D 风（IKB 蓝、Swiss 构图），把概念/流程/机制画成带中文标签的图内文字解释图；支持图表截图语义抽取重画、冷门概念先查参考再统一风格；调宿主内置生图
+- **备注**：与 xiaohei/stickman 同赛道不同风格；配套 guizang-social-card-skill 管外层卡片排版（未收）
+
+```bash
+git clone --depth 1 https://github.com/op7418/guizang-material-illustration.git /tmp/guizang-mi
+cp -r /tmp/guizang-mi external/creator/guizang-material-illustration
+rm -rf /tmp/guizang-mi/.git
 ```
 
 ### human-writing
@@ -75,6 +110,18 @@ rm -rf logo-design-skill
 
 ```bash
 git clone --depth 1 https://github.com/VoltAgent/awesome-design-md.git external/design/awesome-design-md
+```
+
+### ui-skills
+
+- **仓库**：https://github.com/ibelick/ui-skills
+- **用途**：UI skill 聚合注册库（406 个第三方 skill 索引）；自带 8 个自包含 skill：baseline-ui（去 AI 味排版清理）、fixing-accessibility / fixing-metadata / fixing-motion-performance（无障碍 / 元数据 / 动效性能体检）、improve-ui（只读审计出实现计划）、create-design-md（从产品反推 DESIGN.md）、component-canvas（组件画布）
+- **备注**：MIT；收自带 `skills/` 8 个（120K）；其余 398 个 agent 经 ui-skills-root 走 `npx ui-skills get <名>` 按需自拉
+
+```bash
+git clone --depth 1 https://github.com/ibelick/ui-skills.git /tmp/ui-skills
+cp -r /tmp/ui-skills/skills external/design/ui-skills
+rm -rf /tmp/ui-skills
 ```
 
 ## research
@@ -134,3 +181,53 @@ git clone --depth 1 https://github.com/chuspeeism/dashi-ppt-skill.git /tmp/dashi
 cp -r /tmp/dashi-ppt-skill/skills/dashi-ppt external/tools/dashi-ppt
 rm -rf /tmp/dashi-ppt-skill
 ```
+
+### ponytail
+
+- **仓库**：https://github.com/DietrichGebert/ponytail
+- **用途**：编码型 agent skill——"懒散资深工程师"：只写必要代码、优先复用已有能力，但验证/安全/错误处理绝不省；带 `/ponytail-review`（审 diff）、`/ponytail-audit`（全仓排优先级）等命令
+- **备注**：MIT；收上游 `skills/` 全部 6 个 skill
+
+```bash
+git clone --depth 1 https://github.com/DietrichGebert/ponytail.git /tmp/ponytail
+cp -r /tmp/ponytail/skills external/tools/ponytail
+rm -rf /tmp/ponytail
+```
+
+### translate-book
+
+- **仓库**：https://github.com/deusyu/translate-book
+- **用途**：整本书翻译 skill——PDF/DOCX/EPUB → Calibre 转 Markdown 分块 → 8 并行子代理各带独立上下文翻译 → SHA-256 清单校验 → Pandoc/Calibre 出 HTML/DOCX/EPUB/PDF；含术语表跨块一致、邻块指代上下文、断点续跑、术语变更只重译受影响块
+- **备注**：MIT；整仓即 skill（896K，tests 样书 11M 未收）；用时要装 Calibre + Pandoc + `pip install pypandoc`；不吃独立 API key，翻译走宿主 agent 自身额度
+
+```bash
+git clone --depth 1 https://github.com/deusyu/translate-book.git /tmp/translate-book
+cp -r /tmp/translate-book external/tools/translate-book
+rm -rf /tmp/translate-book/.git /tmp/translate-book/tests
+```
+
+### council
+
+- **仓库**：https://github.com/0xNyk/council-of-high-intelligence
+- **用途**：多人审议决策 skill——18 个思想家人设对问题多轮辩论出裁决（盲评→匿名质询→加权计票）
+- **备注**：MIT；跨宿主（Codex/Gemini/OpenCode 各有 SKILL 变体）；收 SKILL + agents/（18 议员，即原生 subagent 定义）+ scripts/ + configs/（432K）；装法：`agents/*.md` 拷 `~/.claude/agents/`、目录软链 `~/.claude/skills/council`，然后 `/council --triad <域> 问题`
+
+```bash
+git clone --depth 1 https://github.com/0xNyk/council-of-high-intelligence.git /tmp/council
+cp -r /tmp/council external/tools/council
+rm -rf /tmp/council/.git /tmp/council/assets
+```
+
+### ai-website-cloner-template
+
+- **仓库**：https://github.com/JCodesMore/ai-website-cloner-template
+- **用途**：网站临摹模板——让 agent 开浏览器观察源站（双端全状态、实测样式、下载真素材）后手写 React 组件临摹，同视口对比修差，产出可维护 Next.js 代码
+- **备注**：MIT；通用 skill 在 `.agents/skills/clone-website/`（Codex/Cursor/OpenCode 直接读；Claude Code 对话里点名引用该 SKILL.md 即可），整仓即用无需安装；Node 24+，先 `npm install && npm run check`；复刻质量取决于模型（推荐 Opus）
+
+```bash
+git clone --depth 1 https://github.com/JCodesMore/ai-website-cloner-template.git /tmp/awct
+cp -r /tmp/awct external/tools/ai-website-cloner-template
+rm -rf /tmp/awct/.git
+```
+
+
