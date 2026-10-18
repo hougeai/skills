@@ -101,6 +101,25 @@ cp -r /tmp/human-writing/human-writing external/creator/human-writing
 rm -rf /tmp/human-writing
 ```
 
+### baoyu-skills（合集）
+
+- **仓库**：https://github.com/JimLiu/baoyu-skills（本地镜像：`/home/liuwei/projects/baoyu-skills`）
+- **用途**：宝玉内容生产 skill 合集，全部 `baoyu-*` 整目录复制到 `external/creator/baoyu-skills/`，按需自删。
+  - `baoyu-cover-image` — 文章封面生成（Type×Palette×Rendering×Text×Mood）
+  - `baoyu-article-illustrator` — 正文配图（Type×Style×Palette）
+  - `baoyu-format-markdown` — 草稿/纯文本整理成结构化 Markdown
+  - `baoyu-xhs-images` — 小红书图文卡系列（Style×Layout）
+  - `baoyu-infographic` — 专业信息图（21 布局 × 21 风格）
+  - `baoyu-diagram` — 出版级 SVG 图表（流程/时序/结构/示意）
+  - `baoyu-slide-deck` — 幻灯片图片（合并 pptx/pdf）
+  - `baoyu-comic` — 知识漫画（画风×语气）
+
+```bash
+git clone --depth 1 https://github.com/JimLiu/baoyu-skills.git /tmp/baoyu-skills
+cp -r /tmp/baoyu-skills/skills/baoyu-* external/creator/baoyu-skills/
+rm -rf /tmp/baoyu-skills
+```
+
 ## design
 
 ### logo-design
