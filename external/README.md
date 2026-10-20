@@ -154,6 +154,18 @@ cp -r /tmp/ui-skills/skills external/design/ui-skills
 rm -rf /tmp/ui-skills
 ```
 
+### oil-ui
+
+- **仓库**：https://github.com/oil-oil/oil-ui
+- **用途**：AI Agent UI 设计 skill；并排探索多个差异方向 → 你选一 → 据真实截图精修；覆盖 web/app/看板/组件
+- **备注**：MIT（开源版）；有 Pro 付费版（$9.99 一次性）与开源版抢同一请求——勿同装；版本检查需 Python 3
+
+```bash
+git clone --depth 1 https://github.com/oil-oil/oil-ui.git /tmp/oil-ui
+cp -r /tmp/oil-ui external/design/oil-ui
+rm -rf /tmp/oil-ui
+```
+
 ## research
 
 ### figures4papers
