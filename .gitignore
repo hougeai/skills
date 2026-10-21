@@ -4,6 +4,7 @@ node_modules/
 .venv
 .env
 
+__pycache__/
 # 外部收藏的 skill（内容不追踪，清单见 external/README.md）
 external/*
 !external/README.md
