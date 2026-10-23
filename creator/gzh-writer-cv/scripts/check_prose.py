@@ -612,6 +612,10 @@ def main() -> int:
                 rest = text[match.end() :].lstrip()
                 if rest[:4].lower().startswith(("http", "www.", "ftp:")):
                     continue
+                before = prose[max(0, match.start() - 2) : match.start()]
+                after = prose[match.end() : match.end() + 2]
+                if before.endswith(":") or after.startswith(":"):
+                    continue
                 hard.append(match)
             matches = hard
         if matches:
@@ -978,6 +982,15 @@ def main() -> int:
                 f"可识别段落中有 {ratio:.0%} 只有一句话，可能形成统一的短段鼓点。"
             )
 
+    two_sentence_breach = [p for p in paragraphs if p.sentences > 2]
+    if two_sentence_breach:
+        lines = "、".join(
+            str(line_number(text, p.position)) for p in two_sentence_breach[:6]
+        )
+        warnings.append(
+            f"超过两句的段落共 {len(two_sentence_breach)} 处，第 {lines} 行。第三句起换行分段。"
+        )
+
     streak = short_streak(paragraphs)
     if streak:
         first = streak[0]
@@ -1018,7 +1031,7 @@ def main() -> int:
         f"前置从句 {len(fronted_clauses)}，话题壳 {len(fronted_shells)}，"
         f"句首连接词 {len(lead_connectors)}，公式 {len(formula_marks)}，"
         f"嵌入链接 {len(markdown_links)}，分隔线 {len(separators)}，"
-        f"本地图 {len(local_images)}，长段 {len(long_blocks)}，超长句 {len(overlong)}"
+        f"本地图 {len(local_images)}，长段 {len(long_blocks)}，超两句段 {len(two_sentence_breach)}，超长句 {len(overlong)}"
     )
 
     if failures:
