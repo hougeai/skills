@@ -28,10 +28,10 @@ Base URL：`https://api.qlcloud.top/gateway/img/v1`
 响应（两个端点同构）：
 
 ```json
-{ "created": 1789000000, "data": [{ "url": "https://pub-xxx.r2.dev/img/xxxx-0.png", "seed": 0 }] }
+{ "created": 1789000000, "data": [{ "url": "https://xxx/img/xxxx-0.png", "seed": 0 }] }
 ```
 
-`data[0].url` 为**永久地址**（已转存对象存储），可直接下载/Markdown 引用。每次调用固定返回 1 张。
+`data[0].url` 已转存对象存储，可直接下载/Markdown 引用。每次调用固定返回 1 张。
 
 ## 模型档位（model 参数）
 
