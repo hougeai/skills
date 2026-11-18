@@ -1,6 +1,6 @@
 ---
 name: qianliu-asr
-description: 千流云语音转文字（录音转写 / 说话人识别）。当用户要求把音频、会议录音、访谈、课程视频音轨转成文字文稿，或需要区分「谁在什么时候说话」（角色标注 + 时间戳）时使用本技能。三个计费档位：asr-flash（极速）、asr-pro（精度）、asr-diarize（说话人识别），另有实时转写两档（wss）。
+description: 千流云语音转文字（录音转写 / 说话人识别）。当用户要求把音频、会议录音、访谈、课程视频音轨转成文字文稿，或需要区分「谁在什么时候说话」（角色标注 + 时间戳）时使用本技能。三个计费档位：asr-flash（极速）、asr-pro（多语种 + 分句时间戳）、asr-diarize（说话人识别），另有实时转写两档（wss）。
 ---
 
 # 千流云语音转文字 Skill
@@ -27,23 +27,17 @@ Base URL：`https://api.qlcloud.top/gateway/asr/v1`
 
 限制：单个音频 **≤ 50MB、≤ 1 小时**。长音频耗时与时长正相关，**务必设置 600s 超时**。
 
-标准档位响应：
-
-```json
-{ "duration": 13.73, "text": "转写文稿全文……", "usage": { "type": "duration", "seconds": 14 } }
-```
-
 ## 模型档位（model 参数）
 
 | model | 适用 |
 | --- | --- |
 | `asr-flash` | 极速档：秒级出稿，标点完整，日常纪要首选 |
-| `asr-pro` | 匠心档：标点、断句、专名更准确，正式文稿与长音频选它 |
-| `asr-diarize` | 说话人识别：区分「谁在什么时候说话」，响应额外返回 segments |
+| `asr-pro` | 多语种（中英日韩粤），返回分句时间戳（start_ms/end_ms）；不含标点恢复和说话人分离 |
+| `asr-diarize` | 说话人识别：区分「谁在什么时候说话」，segments 带 speaker 与时间戳 |
 | `asr-realtime-flash` | 实时轻量档（wss）：中英日韩粤多语言，跨语言会议即时转写 |
 | `asr-realtime-pro` | 实时精准档（wss）：真流式文字只增不改、字幕稳定不闪，中英高准确率 |
 
-计费：**按秒（单价 × `usage.seconds`），成功才计费，失败不扣；单价以「接入指南」页目录为准**。默认建议：日常用 asr-flash；正式文稿/长音频用 asr-pro；需要角色区分用 asr-diarize。
+计费：**按秒，成功才计费，失败不扣；单价以「接入指南」页目录为准**。默认建议：日常用 asr-flash；多语种/需要分句时间戳用 asr-pro；需要角色区分用 asr-diarize。
 
 ## 音频转写（asr-flash / asr-pro）
 
@@ -55,6 +49,18 @@ curl https://api.qlcloud.top/gateway/asr/v1/audio/transcriptions \
   --max-time 600
 ```
 
+统一响应（`segments` 仅分句/说话人档返回）：
+
+```json
+{
+  "duration": 13.73,
+  "text": "转写文稿全文……",
+  "segments": [{ "start": 0.77, "end": 5.98, "text": "……" }]
+}
+```
+
+asr-pro 的 segment 时间戳为 `start_ms` / `end_ms`（毫秒）；asr-diarize 的 segment 另含 `speaker`。
+
 ## 说话人识别（asr-diarize）
 
 同一端点，`model=asr-diarize`。响应额外带 `segments` 明细；`text` 为带时间戳的拼接文稿：
@@ -62,11 +68,10 @@ curl https://api.qlcloud.top/gateway/asr/v1/audio/transcriptions \
 ```json
 {
   "duration": 1693.85,
+  "text": "SPEAKER_00 [00:00:00.000 -> 00:00:08.920]\n……\n\nSPEAKER_01 [00:00:08.920 -> 00:00:13.680]\n……",
   "segments": [
     { "start": 0.0, "end": 8.92, "speaker": "SPEAKER_00", "text": "……" }
-  ],
-  "text": "SPEAKER_00 [00:00:00.000 -> 00:00:08.920]\n……\n\nSPEAKER_01 [00:00:08.920 -> 00:00:13.680]\n……",
-  "usage": { "type": "duration", "seconds": 1694 }
+  ]
 }
 ```
 
